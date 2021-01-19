@@ -1,7 +1,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
-// import { Configuration } from 'webpack';
+import { Configuration } from 'webpack';
 /**
  * @type {Configuration}
  */
@@ -25,7 +25,24 @@ const config = {
 			},
 			{
 				test: /\.less$/,
-				use: ['style-loader', 'css-loader', 'less-loader', 'postcss-loader'],
+				use: [
+					{
+						loader: 'style-loader',
+					},
+					{
+						loader: 'css-loader',
+						options: {
+							importLoaders: 2, // 执行css-loader前执行的loader数量
+							modules: true, // 开启css模块化
+						},
+					},
+					{
+						loader: 'less-loader',
+					},
+					{
+						loader: 'postcss-loader',
+					},
+				],
 			},
 		],
 	},
