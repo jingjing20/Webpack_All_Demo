@@ -1,7 +1,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
-import { Configuration } from 'webpack';
+// import { Configuration } from 'webpack';
 /**
  * @type {Configuration}
  */
