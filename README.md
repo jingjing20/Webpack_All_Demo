@@ -21,7 +21,7 @@
 
 -   各种插件，直接查阅官方文档。
 
--   html 模板插件、自动清除打包文件夹插件、压缩文件插件等等。
+-   html 模板插件、自动清除打包文件夹插件、压缩文件插件、样式处理插件等等。
 
 ## babel
 
@@ -92,7 +92,69 @@
 
 -   只支持静态引入的方法（ES Module），不支持动态引入的方式（Common Js）。
 -   只会把用到的代码打包，没用到的会被剔除。
+-   在生产模式下会自动开启 tree shaking。
 
 ## webpack-merge 使用
 
 -   把公共的配置提取到 webpack.common.js 里面，然后在 webpack.dev.js 和 webpack.prod.js 里面引入 webpack.common.js，同时采用 webpack-merge 把他们两个合并后再导出。
+
+## webpack-bundle-analyzer 参数配置详情
+
+```js
+new BundleAnalyzerPlugin({
+    // 可以是`server`，`static`或`disabled`。
+    // 在`server`模式下，分析器将启动HTTP服务器来显示软件包报告。
+    // 在“静态”模式下，会生成带有报告的单个HTML文件。
+    // 在`disabled`模式下，你可以使用这个插件来将`generateStatsFile`设置为`true`来生成Webpack Stats JSON文件。
+    analyzerMode: 'server',
+    // 将在“服务器”模式下使用的主机启动HTTP服务器。
+    analyzerHost: '127.0.0.1',
+    // 将在“服务器”模式下使用的端口启动HTTP服务器。
+    analyzerPort: 8888,
+    // 路径捆绑，将在`static`模式下生成的报告文件。
+    // 相对于捆绑输出目录。
+    reportFilename: 'report.html',
+    // 模块大小默认显示在报告中。
+    // 应该是`stat`，`parsed`或者`gzip`中的一个。
+    // 有关更多信息，请参见“定义”一节。
+    defaultSizes: 'parsed',
+    // 在默认浏览器中自动打开报告
+    openAnalyzer: true,
+    // 如果为 true，则 Webpack Stats JSON 文件将在 bundle 输出目录中生成
+    generateStatsFile: false,
+    // 如果`generateStatsFile`为`true`，将会生成Webpack Stats JSON文件的名字。
+    // 相对于捆绑输出目录。
+    statsFilename: 'stats.json',
+    // stats.toJson（）方法的选项。
+    // 例如，您可以使用`source：false`选项排除统计文件中模块的来源。
+    statsOptions: null,
+    logLevel: 'info', // 日志级别。可以是'信息'，'警告'，'错误'或'沉默'。
+}),
+```
+
+## webpack 与 预加载
+
+-   如下代码所示，在异步加载某个模块的时候，在里面写上 `/* webpackPrefetch: true */`之后，浏览器会在加载完所有同步加载的文件之后，自动去提前加载异步模块。这样就能提高异步加载模块时的速度，提升用户体验。
+
+```js
+document.addEventListener('click', () => {
+	import(/* webpackPrefetch: true */ './click.js').then(({ default: func }) => {
+		func();
+	});
+});
+```
+
+-   举个例子，比如在某个网站上面，用户首次访问的时候没有登录。当你点击登录时再去加载登录需要使用的文件的话，必然会有所延迟，降低用户体验。当然你也可以在加载网站首页的时候就把登录需要使用的文件也都下载下来，但是这也必然会影响首页加载速度，也会降低用户体验。webpack 提供的这个功能就很好的解决了这些个问题。
+
+## webpack 与 浏览器缓存
+
+-   在浏览器中打开一个打包好的文件，然后回到编辑器中修改一下代码保存重新打包一次。再回到浏览器刷新页面，你会发现页面不会有任何变化。因为浏览器有缓存机制，发现你请求的文件本地已经有一样名字文件缓存下来了，浏览器会直接拿过来用了。解决方式如下：在 `webpack.config.js` 的 `output` 的文件名加上下面的 [contenthash]。
+
+```js
+output: {
+    filename: '[name].[contenthash].js',
+    chunkFilename: '[name].[contenthash].js'
+}
+```
+
+-   这样配置打包出来的文件名会加上以文件内容生成的 hash 值，所以只要文件有了变化，打包出来的文件名就会不一样，在浏览器加载文件的时候就不会走缓存而是请求新的文件了。
