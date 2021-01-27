@@ -11,6 +11,9 @@ const config = {
 	entry: {
 		main: './src/index.js',
 	},
+	resolve: {
+		extensions: ['.js', '.jxs'],
+	},
 	module: {
 		rules: [
 			{
@@ -76,7 +79,7 @@ const config = {
 	output: {
 		publicPath: '/',
 		filename: '[name].js',
-		path: path.resolve(__dirname, 'dist'),
+		path: path.resolve(__dirname, '../dist'),
 	},
 };
 

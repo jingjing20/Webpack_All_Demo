@@ -23,6 +23,9 @@ const config = {
 				test: /\.js$/,
 				use: {
 					loader: path.resolve(__dirname, 'loaders/replaceLoader.js'),
+					options: {
+						name: 'baobao',
+					},
 				},
 			},
 		],
