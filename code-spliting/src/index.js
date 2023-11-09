@@ -1,13 +1,13 @@
 function getComponent() {
-	return import(/* webpackChunkName:"lodash" */ 'lodash').then(({ default: _ }) => {
-		var element = document.createElement('div');
-		element.innerHTML = _.join(['jing', 'jing'], '-');
-		return element;
-	});
+  return import(/* webpackChunkName:"lodash" */ 'lodash').then(({ default: _ }) => {
+    var element = document.createElement('div');
+    element.innerHTML = _.join(['jing', 'jing'], '-');
+    return element;
+  });
 }
 
 getComponent().then((element) => {
-	document.body.appendChild(element);
+  document.body.appendChild(element);
 });
 
 // 代码分割，和webpack无关

@@ -5,25 +5,25 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
  * @type {Configuration}
  */
 const config = {
-	mode: 'development',
-	entry: {
-		main: './src/index.js',
-	},
-	module: {
-		rules: [
-			{
-				test: /\.jpg$/,
-				use: {
-					loader: 'file-loader',
-				},
-			},
-		],
-	},
-	plugins: [
-		new HtmlWebpackPlugin({
-			template: './src/index.html',
-		}),
-	],
+  mode: 'development',
+  entry: {
+    main: './src/index.js',
+  },
+  module: {
+    rules: [
+      {
+        test: /\.jpg$/,
+        use: {
+          loader: 'file-loader',
+        },
+      },
+    ],
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './src/index.html',
+    }),
+  ],
 };
 
 module.exports = config;

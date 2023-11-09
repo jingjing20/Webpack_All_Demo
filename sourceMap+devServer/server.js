@@ -9,11 +9,11 @@ const complie = webpack(config);
 const app = express();
 
 app.use(
-	webpackDevMiddleware(complie, {
-		publicPath: config.output.publicPath,
-	})
+  webpackDevMiddleware(complie, {
+    publicPath: config.output.publicPath,
+  }),
 );
 
 app.listen(3000, () => {
-	console.log('服务已开启'); //jing-log
+  console.log('服务已开启'); //jing-log
 });
