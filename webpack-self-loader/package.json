@@ -1,0 +1,25 @@
+{
+  "name": "webpack-self-loader",
+  "version": "1.0.0",
+  "description": "",
+  "main": "webpack.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack build --progress --config ./webpack.config.js"
+  },
+  "keywords": [],
+  "type": "module",
+  "author": "jingjing20",
+  "dependencies": {
+    "marked": "^10.0.0",
+    "style-loader": "^3.3.3",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-sources": "^3.2.3"
+  },
+  "devDependencies": {
+    "css-loader": "^6.8.1",
+    "html-webpack-plugin": "^5.5.3"
+  },
+  "license": "ISC"
+}
